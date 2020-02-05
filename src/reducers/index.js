@@ -20,8 +20,10 @@ export const initialState = {
 export const featureReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_FEATURE:
+            console.log("adding feature");
             return state;
         case REMOVE_FEATURE:
+            console.log("removing feature");
             return state;
         default:
             return state;
