@@ -20,25 +20,37 @@ export const initialState = {
 export const featureReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_FEATURE:
-            const filteredAdditionalFeatureArray = state.additionalFeatures.filter(item => action.payload.id !== item.id);
+            // creates a new array for 'additionalFeatures' that contains only features not being added to 'car.features' 
+            const filteredAdditionalFeaturesArray = state.additionalFeatures.filter(item => action.payload.id !== item.id);
             return {
                 ...state,
                 car: {
                     ...state.car,
+                    // adds the feature to 'car.features' that the user wants to add to the car
                     features: [...state.car.features, action.payload]
                 },
-                additionalFeatures: filteredAdditionalFeatureArray,
+                // sets 'additionalFeatures' to the array filtered above
+                // this effectively removes the feature from 'additionalFeatures' because the user wants to buy it.
+                // the feature is placed in 'car.features' instead
+                additionalFeatures: filteredAdditionalFeaturesArray,
+                // adjusts the current 'additionalPrice' using the feature's price
                 additionalPrice: state.additionalPrice + action.payload.price
             }
         case REMOVE_FEATURE:
-            const filteredFeatureArray = state.car.features.filter(item => action.payload.id !== item.id);
+            // creates a new array for 'car.features' that contains only features not being returned to 'additionalFeatures'
+            const filteredFeaturesArray = state.car.features.filter(item => action.payload.id !== item.id);
             return {
                 ...state,
                 car: {
                     ...state.car,
-                    features: filteredFeatureArray
+                    // sets the current 'car.features' to the filtered array
+                    // this effectively removes the feature from 'car.features' that the user no longer wants
+                    // the feature is placed back in 'additionalFeatures' instead
+                    features: filteredFeaturesArray
                 },
+                // puts the feature the user wants to remove from 'car.features' back into the 'additionalFeatures' array
                 additionalFeatures: [...state.additionalFeatures, action.payload],
+                // adjusts the current 'additionalPrice' using the feature's price
                 additionalPrice:  state.additionalPrice - action.payload.price
             }
         default:
