@@ -1,7 +1,8 @@
 import React from 'react';
 
 const AdditionalFeature = props => {
-    const handleClick = e => {
+  const handleClick = e => {
+    e.preventDefault();
     props.addFeature(props.feature);
   }
 

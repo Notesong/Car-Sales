@@ -2,6 +2,7 @@ import React from 'react';
 
 const AddedFeature = props => {
   const handleClick = e => {
+    e.preventDefault();
     props.removeFeature(props.feature);
   }
 
